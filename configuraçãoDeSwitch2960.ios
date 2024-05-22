@@ -1,0 +1,17 @@
+!comentarios - desativar comandos;
+enable
+
+    !configurando Data e Hora
+    cloc set 15:15:00 22May2024
+
+    !modo dee configuração global 
+    configure terminal 
+
+            !configuração hostname
+            hostname sw-01
+
+            !sair de todoos os modos
+            end 
+
+        !salvando da RAM para NVRAM
+        Copy running-config startup-config
