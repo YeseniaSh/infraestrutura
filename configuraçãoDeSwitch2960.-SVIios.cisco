@@ -1,0 +1,12 @@
+enable
+    configure terminal
+        ip default-gateway 192.168.1.254
+        interface vlan 1 
+        description interface SVI do SW-01
+        ip address 192.168.1.250 255.255,255.0 
+        no shutdown 
+        end 
+        write 
+    show ip interface brief
+    show vlan brief 
+    
