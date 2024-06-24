@@ -1,0 +1,91 @@
+!configuração do switch 3650(distribuição) G1 
+    enable
+    configure terminal 
+        interface range gigabithEthernet 1/0/1 - 2
+            chenne-group 1 mode active 
+            exit
+        interface port-chennel 1 
+            description LACP switch 3650 para 2960 
+            switchport mode trunk
+            switchport trunk allowed vlan all 
+        end
+    write
+
+    show running-config 
+    show etherchennel summary
+    show ip interface brief
+
+!switch 2960(lado esquerdo) G1
+    enable
+        configure terminal  
+            interface range gigabithEthernet 0/1 - 2
+            channel-group 1 mode passive 
+            exit
+        interface port-chennel 1
+            description LACP switch 2960 para 3650
+            switchport mode trunk
+            switchport trunk allowed vlan all 
+        end
+    write
+
+!configuração do switch 3650(distribuição - direito) G2 
+    enable
+    configure terminal 
+        interface range gigabithEthernet 1/0/3 - 4
+            channel-group 2 mode active 
+            exit
+        interface port-chennel 2 
+            description LACP switch 3650 para 2960 
+            switchport mode trunk
+            switchport trunk allowed vlan all 
+        end
+    write
+
+    show running-config 
+    show etherchennel summary
+    show ip interface brief
+
+!switch 2960(lado direito) G2
+    enable
+        configure terminal  
+            interface range gigabithEthernet 0/1 - 2
+            channel-group 2 mode passive 
+            exit
+        interface port-channel 2
+            description LACP switch 2960 para 3650
+            switchport mode trunk
+            switchport trunk allowed vlan all 
+        end
+    write
+
+!switch 2960(lado direito (passive) - esquerdo (activo) ) G3
+    enable
+        configure terminal  
+            interface range fastEthernet 0/23 - 24
+            channel-group 3 mode passive 
+            exit
+        interface port-channel 3
+            description LACP switch 2960 para 2960
+            switchport mode trunk
+            switchport trunk allowed vlan all 
+        end
+    write
+
+! configuração do swtch 3650 
+    enable
+        configure terminal
+            spanning-tree vlan 1-60 root primary
+            spanning-tree mode rapid-pvst
+        end
+    write
+
+! configuração do switch 2960 (esquerdo - direito)
+    enable
+        configure terminal
+            spanning-tree mode rapid-pvst
+        end
+    write
+
+
+
+
