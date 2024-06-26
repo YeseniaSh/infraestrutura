@@ -1,0 +1,30 @@
+enable
+    configure terminal
+        ip routing
+            interface vlan 20
+            description interface gateway da vlan 20
+                ip address 192.169.20.254 255.255.255.0
+                no shutdown
+                end 
+            Write
+    show running-config
+    show ip interface brief 
+    show ip route 
+    ping 192.168.20.254
+    ping 192.168.20.1
+
+!configuração do switch 3690 
+    configure terminal
+        interface vlan 30
+            description interface gateway vlan 30
+                ip address 192.168.30.254 255.255.255.0
+                ip helper-address 192.168.20.2
+                no shutdown
+                end 
+            Write 
+
+!Propont de comando
+    ipconfig /all(192.254.x.x - ERRO)
+    ipconfig /release 
+    ipconfig /renew
+
