@@ -1,0 +1,72 @@
+!configuração do router 1941 SPO 01/07/2024
+enable
+    configure terminal
+        interface GigabitEthernet 0/0/0 
+            description interface WAN SPO para RJO 
+            ip address 10.0.0.1 255.255.255.252
+            no shutdown
+        end 
+    Write 
+============================================================================
+!configuração do multilayer 3650
+    enable
+        configure terminal 
+         interface gigabitEthernet 1/0/24
+            description interface de conexao com o router 1941
+            no switchport 
+            ip address 192.168.2.1 255.255.255.0
+            no shutdown 
+            end 
+    write 
+    show running-config
+    show ip interface brief
+    show ip Router 
+
+    configure terminal 
+         interface gigabitEthernet 0/0
+            description interface de conexao com o switch 3650 
+            ip address 192.168.2.254 255.255.255.0
+            no shutdown 
+            end 
+    write 
+===========================================================================
+!configuração do router SPO 
+    enable
+        configure terminal
+            ip route 0.0.0.0 0.0.0.0 10.0.0.2
+        end 
+    write 
+!configuração do route RJO 
+    enable 
+        configure terminal
+            ip route 192.168.1.0 255.255.255.0 10.0.0.1
+end 
+===============================================================
+!configuraçao switch 3650
+    enable 
+        configure terminal 
+            ip route 0.0.0.0 0.0.0.0 192.168.2.254
+end 
+write 
+    ping 192.168.20.254 
+    ping 192.168.2.1
+    ping 192.168.2.254
+    ping 10.0.0.2
+    ping 10.0.0.1
+    ping 192.168.1.254
+    ping 192.168.1.1
+=====================================================================
+!configuração router 2941 RJO
+enable
+    configure terminal 
+        ip route 192.168.10.0 255.255.255.0 192.168.2.1 
+        ip route 192.168.20.0 255.255.255.0 192.168.2.1 
+        ip route 192.168.30.0 255.255.255.0 192.168.2.1 
+        ip route 192.168.40.0 255.255.255.0 192.168.2.1 
+        ip route 192.168.50.0 255.255.255.0 192.168.2.1 
+        ip route 192.168.60.0 255.255.255.0 192.168.2.1
+end
+write 
+
+
+
