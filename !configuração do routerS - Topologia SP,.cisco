@@ -1,0 +1,78 @@
+!configuração do routerS - Topologia SP,RJ e MG. 
+!router SP
+    enable 
+        configure terminal 
+        hostname SP 
+            interface fastEthernet 0/0 
+                ip address 192.168.10.1 255.255.255.0 
+                no shutdown
+                description PORTA LAN de SP 
+            exit 
+            interface serial 0/0 
+                no shutdown
+                ip address 20.0.0.1 255.0.0.0
+                description PORTA WAN QUE LIGA de SP ao RJ
+                clock rate 128000
+                bandwicth 128
+            exit 
+                router rip 
+                network 20.0.0.0
+                network 192.168.10.0  
+            end 
+     write (salvar)
+     copy runn star (salvar)
+
+show running-config (para conferir)
+============================================================================
+! router RJ 
+    enable 
+        configure terminal 
+        hostname RJ 
+            interface fastEthernet 0/0 
+                ip address 192.168.20.1 255.255.255.0 
+                no shutdown
+                description PORTA LAN de RJ 
+            exit 
+            interface serial 0/1
+                no shutdown
+                ip address 20.0.0.2 255.0.0.0
+                description PORTA WAN QUE LIGA de RJ ao SP
+                clock rate 128000
+                bandwicth 128
+            exit 
+            interface serial 0/0
+                no shutdown
+                ip address 30.0.0.1 255.0.0.0
+                description PORTA WAN QUE LIGA de RJ ao MG
+                clock rate 25000
+                bandwicth 256
+            exit 
+                router rip 
+                network 20.0.0.0
+                network 192.168.10.0  
+            end 
+     write
+show running-config (para conferir)
+============================================================================
+! router MG 
+    enable 
+        configure terminal 
+        hostname MG 
+            interface fastEthernet 0/0 
+                ip address 192.168.30.1 255.255.255.0 
+                no shutdown
+                description PORTA LAN de MG 
+            exit 
+            interface serial 0/1
+                no shutdown
+                ip address 30.0.0.2 255.0.0.0
+                description PORTA WAN QUE LIGA de MG ao RJ
+                clock rate 25000
+                bandwicth 256
+            exit 
+                router rip 
+                network 30.0.0.0
+                network 192.168.30.0  
+            end 
+     write
+show running-config (para conferir)
